@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+
+{% block title %} Time Track {% endblock %}
+
+{% block content %}
+    <h1>Time Log Page</h1>
+    <h2>Enter time tracking data:</h2>
+
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="form-group row">
+                <label class="col-2 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div class="col-10">
+                  {{ field }}
+                </div>
+              </div> 
+
+              {% for error in field.errors %}
+                <p style="color: red; margin-bottom: 1%;">{{error}}</p>
+              {% endfor %}
+ 
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-primary" style="margin-bottom: 1%;">Confirm</button>
+        </form>
+    </div> 
+
+{% endblock %}

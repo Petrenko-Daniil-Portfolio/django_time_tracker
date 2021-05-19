@@ -1,0 +1,87 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Other project {% endblock %}
+{% block extralink %}
+<script src="https://cdn.tiny.cloud/1/o2waenjvbulpj548zx7mps9ip898ss8d37cospsgthfyafjm/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: '.tinymce'
+  });
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>Project: {{project.name}}</h1>
+    <p>Creator: <small>{{tasks.0.creator}}</small></p>
+    <h2>Description:</h2>
+    <div><input readonly class="tinymce" type="textarea"  value="{{project.description}}"></div><br><br>
+
+    <h2>Tasks:</h2>
+
+          {% for task in tasks %} 
+
+              <h3>Task: #{{forloop.counter}}  {{task.name}}</h3> 
+              <b>Executor:</b>
+              {% if task.executor == request.user %}
+                <span style="color:royalblue">{{task.executor}}</span>
+              {% else %}
+                <small>{{task.executor}}</small>
+              {% endif %}
+
+              <br><br>
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Start</th>
+                    <th scope="col">End:</th>
+                    <th scope="col">Hours to solve:</th>
+                    <th scope="col">Hours spent:</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <td>{{task.type}}</td>
+
+                    {% if task.priority == 'high' %}
+                      <td style="color:crimson">{{task.priority}}</td>
+
+                    {% elif task.priority == 'medium' %}
+                      <td style="color:goldenrod">{{task.priority}}</td>
+                    {% else %}
+                      <td style="color:green;">{{task.priority}}</td>
+                    {% endif%}
+                    
+                    <td style="color: green;">{{task.date_of_start}}</td>
+                    <td style="color: firebrick;">{{task.date_of_end}}</td>
+                    <td>{{task.hours_to_solve}}</td>
+
+                    <td>
+                    {% for hours in hours_spent %}
+                      {% if forloop.counter == forloop.parentloop.counter %}
+                        {{hours}}
+                      {% endif %}
+                    {% endfor %}
+                    </td>
+                </tbody>
+            </table>
+              <br>
+
+              <div class="d-flex justify-content-center">
+                {% if task.executor == request.user %}
+                    <a href="{% url 'track_time' request.user project.slug task.id  %}" class="btn btn-success flex-fill">
+                        Track Time
+                    </a>
+                {% endif %}
+                <a href="{% url 'task' task.executor project.slug task.id %}" class="btn btn-info flex-fill p-2">Task Page</a>
+              </div>
+
+              <hr class="under_line">
+
+          {% endfor %}
+
+
+
+{% endblock %}

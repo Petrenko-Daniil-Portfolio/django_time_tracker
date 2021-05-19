@@ -1,0 +1,73 @@
+<head>
+    <style>
+        th,td{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+{% block content %}
+    <h1>Update information</h1>
+    <h2>Project: {{old_task.project}}</h2>
+    <h2>Task: {{old_task.name}}</h3>
+    <br>
+
+    <table>
+        <tr>
+            <th>FIELD</th>
+            <th>NEW</th>
+            <th>OLD</th>
+        </tr>
+
+        <tr {% if new_task.name != old_task.name %} style="color: green;" {% endif %}>
+            <td>NAME</td>
+            <td>{{new_task.name}}</td>
+            <td>{{old_task.name}}</td>
+        </tr>
+        <tr {% if new_task.description != old_task.description %} style="color: green;" {% endif %}>
+            <td>DESCRIPTION</td>
+            <td>{{new_task.description}}</td>
+            <td>{{old_task.description}}</td>
+        </tr>
+        <tr {% if new_task.date_of_start != old_task.date_of_start %} style="color: green;" {% endif %}>
+            <td>DATE_OF_START</td>
+            <td>{{new_task.date_of_start}}</td>
+            <td>{{old_task.date_of_start}}</td>
+        </tr>
+        <tr {% if new_task.date_of_end != old_task.date_of_end %} style="color: green;" {% endif %}>
+            <td>DATE_OF_END</td>
+            <td>{{new_task.date_of_end}}</td>
+            <td>{{old_task.date_of_end}}</td>
+        </tr>
+        <tr {% if new_task.type != old_task.type %} style="color: green;" {% endif %}>
+            <td>TYPE</td>
+            <td>{{new_task.type}}</td>
+            <td>{{old_task.type}}</td>
+        </tr>
+        <tr {% if new_task.priority != old_task.priority %} style="color: green;" {% endif %}>
+            <td>PRIORITY</td>
+            <td>{{new_task.priority}}</td>
+            <td>{{old_task.priority}}</td>
+        </tr>
+        <tr {% if new_task.hours_to_solve != old_task.hours_to_solve %} style="color: green;" {% endif %}>
+            <td>HOURS_TO_SOLVE</td>
+            <td>{{new_task.hours_to_solve}}</td>
+            <td>{{old_task.hours_to_solve}}</td>
+        </tr>
+        <tr {% if new_task.creator != old_task.creator %} style="color: green;" {% endif %}>
+            <td>CREATOR</td>
+            <td>{{new_task.creator}}</td>
+            <td>{{old_task.creator}}</td>
+        </tr>
+        <tr {% if new_task.executor != old_task.executor %} style="color: green;" {% endif %}>
+            <td>EXECUTOR</td>
+            <td>{{new_task.executor}}</td>
+            <td>{{old_task.executor}}</td>
+        </tr>
+        <tr {% if new_task.project != old_task.project %} style="color: green;" {% endif %}>
+            <td>PROJECT</td>
+            <td>{{new_task.project}}</td>
+            <td>{{old_task.project}}</td>
+        </tr>
+    </table>
+
+{% endblock %}

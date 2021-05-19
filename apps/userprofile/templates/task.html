@@ -1,0 +1,119 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Task {% endblock %}
+{% block extralink %}
+<script src="https://cdn.tiny.cloud/1/o2waenjvbulpj548zx7mps9ip898ss8d37cospsgthfyafjm/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: '.tinymce'
+  });
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>Task: {{task.name}}</h1>
+    <p>Project: <a href="{% url 'user_project' request.user task.project.slug %}">{{task.project}}</a></p>
+    <p>Creator: <small>{{task.creator}}</small></p>
+
+
+    {% if task.executor == request.user %}
+      <a href="{% url 'track_time' request.user task.project.slug task.id  %}" class="btn btn-success flex-fill">
+        Track Time
+      </a>
+    {% endif %}
+      <a href="{% url 'update_task' request.user task.project.slug task.id  %}" class="btn btn-warning flex-fill">
+        Edit Task
+      </a>
+      <a href="{% url 'timelog' request.user task.project.slug task.id  %}" class="btn btn-info flex-fill">
+        Timelog
+      </a>
+    <br><br>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Executor</th>
+            <th scope="col">Type</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Date Of Start</th>
+            <th scope="col">Date Of End</th>
+            <th scope="col">Hours To Solve</th>
+            <th scope="col">Hours Spent</th>
+            <!-- <th scope="col">Options</th> -->
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>{{task.name}}</td>
+              <td>{{task.executor}}</td>
+              <td>{{task.type}}</td>
+              <td>{{task.priority}}</td>
+              <td>{{task.date_of_start}}</td>
+              <td>{{task.date_of_end}}</td>
+              <td>{{task.hours_to_solve}}</td>
+              <td>{{hours_spent}}</td>
+
+
+        </tbody>
+      </table>
+
+    <h2>Description:</h2>
+    <div><input readonly class="tinymce" type="textarea"  value="{{task.description}}"></div><br><br>
+
+    <h2>Comments:</h2>
+        
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="form-group row">
+                <label class="col-2 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div class="col-10">
+                  {{ field }}
+                </div>
+              </div> 
+
+              {% for error in field.errors %}
+                <p style="color: red; margin-bottom: 1%;">{{error}}</p>
+              {% endfor %}
+ 
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-primary" style="margin-bottom: 1%;">Send message</button>
+        </form>
+    </div> 
+    <hr class="under_line">
+        {% if comments|length%}
+
+            {% for comment in comments %} 
+                <br>
+                    <div>
+                        <textarea  class="md-textarea form-control">{{comment.comment}}</textarea >
+                        <b>User: </b>
+                        {% if comment.user_id == request.user %}
+                            <span style='color: royalblue'>
+                                {{comment.user_id}}
+                            </span>
+                        {% else %}
+                            <small>
+                                {{comment.user_id}}
+                            </small>
+                        {% endif %}
+                        <br>
+
+                        <b>Date: </b> <small> {{comment.date}}</small>
+                        <hr>
+                    </div>
+                <br>
+                
+            {% endfor %}
+
+
+        {% else %}
+            <p>There are no comments for this task</p>
+        {% endif %}
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title%}
+    Home
+{% endblock %}
+
+{% block content %}
+    <h1>Home page</h1>
+
+    <h2 class="text-center">Lorem is lorem</h2>
+
+    <p class="text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora, at vel possimus alias earum praesentium illo tempore laudantium molestiae vitae natus maxime, incidunt nulla similique voluptatibus aspernatur architecto sed laborum!
+    Corrupti magnam sint, cum vel sed quos explicabo unde similique aperiam inventore! Debitis, temporibus! Sed suscipit ad cupiditate, ea numquam provident delectus sapiente ipsa adipisci architecto! Voluptate eveniet aperiam vel?
+    Harum error accusantium omnis. Eius aliquam repudiandae, quam perspiciatis dolore nesciunt ratione atque possimus, quod corporis aut error repellendus exercitationem ad sequi nihil nisi at. Et id qui amet sint?
+    Incidunt impedit non doloremque, voluptates eum, alias, officia animi expedita culpa molestias facilis quam? Tenetur inventore sit obcaecati, vitae unde nobis repellat quidem rem assumenda incidunt provident rerum sapiente at?
+    Beatae esse asperiores officiis excepturi ducimus dolor minima dolorem delectus tenetur similique corporis, doloremque assumenda unde dicta voluptatem reiciendis ratione blanditiis voluptatibus dolore ab? Quod ea inventore nam animi praesentium.</p>
+    <br>
+
+
+    <div class="container d-flex">
+        <div style="flex-shrink: 0;">
+            <img style=" width: 100%;" src="{% static 'images/time_tracker.png' %}"  alt="oops">
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero amet eum veritatis, fuga impedit illum sed doloremque provident odio tempore officia temporibus debitis eos, in quo. Rerum, vitae reprehenderit? Fugit?</p>
+    </div>
+   <hr>
+    <div class="container d-flex flex-row-reverse">
+        <div style="flex-shrink: 0;">
+            <img style=" width: 100%;" src="{% static 'images/time_tracker.png' %}"  alt="oops">
+        </div>
+        <div><p class="text-right">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero amet eum veritatis, fuga impedit illum sed doloremque provident odio tempore officia temporibus debitis eos, in quo. Rerum, vitae reprehenderit? Fugit?</p></div>
+        
+    </div>
+    <hr>
+{% endblock %}

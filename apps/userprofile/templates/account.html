@@ -1,0 +1,86 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Account {% endblock %}
+
+
+{% block content %}
+    <h1>Account Page</h1>
+    <h2>Hello, {{user.name}}!</h2>
+    <br>
+    <div style="width: 100px; height: 100px;" class="container float-left">
+        {% if user.avatar.url != None %}
+            <img src="{{user.avatar.url}}" class="img-thumbnail" alt="Your avatar could be here">
+        {% else %}
+            <img src="" class="img-thumbnail" alt="Your avatar could be here">
+        {% endif %}    
+    </div>
+    <br>
+    <p>This is your account page. Here you can manage your own projects and participate in others</p>
+    
+    <a href="{% url 'user_projects' request.user %}" class="btn btn-outline-primary" role="button" aria-pressed="true">My projects</a>
+    
+    <br><br>
+
+    <h2>Tasks:</h2>
+    {% if tasks is not none %}
+
+        {% for task in tasks %} 
+
+            <h3>#{{forloop.counter}}  {{task.name}}</h3> 
+            <b>Project: <a href="{% url 'user_project' request.user task.project.slug %}">{{task.project}}</a></b> 
+
+            <br><br>
+            <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Type:</th>
+                <th scope="col">Priority:</th>
+                <th scope="col">Start:</th>
+                <th scope="col">End:</th>
+                <th scope="col">Hours to solve:</th>
+                <th scope="col">Hours spent:</th>
+            </tr>
+            </thead>
+            <tbody>
+                <td>{{task.type}}</td>
+
+                {% if task.priority == 'high' %}
+                    <td style="color:crimson">{{task.priority}}</td>
+
+                {% elif task.priority == 'medium' %}
+                    <td style="color:goldenrod">{{task.priority}}</td>
+                {% else %}
+                    <td style="color:green;">{{task.priority}}</td>
+                {% endif%}
+                
+                <td style="color: green;">{{task.date_of_start}}</td>
+                <td style="color: firebrick;">{{task.date_of_end}}</td>
+                <td>{{task.hours_to_solve}}</td>
+
+                <td>
+                {% for hours in hours_spent %}
+                    {% if forloop.counter == forloop.parentloop.counter %}
+                    {{hours}}
+                    {% endif %}
+                {% endfor %}
+                </td>
+            </tbody>
+        </table>
+            <br>
+
+            <div class="d-flex justify-content-center">
+
+            <a href="{% url 'track_time' request.user task.project.slug task.id  %}" class="btn btn-success flex-fill">Track Time</a>
+
+            <a href="{% url 'task' task.executor task.project.slug task.id %}" class="btn btn-info flex-fill p-2">Task Page</a>
+            </div>
+
+            <hr class="under_line">
+
+        {% endfor %}
+    
+    {% else %}
+        You don`t have any tasks.
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %} My projects {% endblock %}
+
+
+{% block content %}
+    <h1>My projects</h1>
+    <br><br>
+
+    <h2>Projects:</h2>
+
+    {% if user_projects is not none %}
+
+        <table style="width: 80%;"  class="table table-striped">
+            <th scope="col">#NAME</th>
+            <th scope="col">SLUG</th>
+            <th scope="col">OPTIONS</th>
+                {% for project in user_projects %}
+                    <tr>
+                        <td><h3 style="display: inline;">{{forloop.counter}} {{project}}</h3></td> 
+                        <td style="vertical-align:bottom"><small>{{project.slug}}</small></td>
+                        <td><a href="{% url 'user_project' request.user project.slug %}" class="btn btn-info">Project Page</a></td> 
+                    </tr>
+                {% endfor %}
+            </table>
+            
+    {% else %}
+        <p>You don`t take part in other people`s projects</p>   
+    {% endif %}
+    
+{% endblock %}
+

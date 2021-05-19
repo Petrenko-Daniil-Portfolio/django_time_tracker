@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Login {% endblock %}
+
+
+{% block content %}
+    <h1>Timelog Page</h1>
+    <br>
+
+    <h2 style="display: inline;">Project: </h2> <a href="{% url 'user_project' request.user project.slug %}">Back to project page: {{project.name}}</a>
+    <br>
+    <h2 style="display: inline;">Task: </h2>  <a href="{% url 'task' request.user project.slug task.id %}">Back to task page: {{task.name}}</a>
+    <br><br>
+
+    <div class="container">
+        <h3>Timelog:</h3>
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col"> Hours Spent</th>
+                    <th scope="col"> Date</th>
+                </tr>
+            </thead>
+
+            {% for rec in timelog_recs %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{rec.comment}}</td>
+                    <td>{{rec.hours_spent}}</td>
+                    <td>{{rec.date}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+{% endblock %}
